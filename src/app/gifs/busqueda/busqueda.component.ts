@@ -22,6 +22,7 @@ export class BusquedaComponent{
       return;
     }
 
+    //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
 
     this.serviciogifs.buscarGifs(valor);
     this.txtBuscar.nativeElement.value = '';
