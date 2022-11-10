@@ -22,7 +22,7 @@ export class BusquedaComponent{
       return;
     }
 
-    //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
+    //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
 
     this.serviciogifs.buscarGifs(valor);
     this.txtBuscar.nativeElement.value = '';

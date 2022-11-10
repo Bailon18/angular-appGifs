@@ -15,11 +15,7 @@ export class SidebarComponent{
 
 
  buscar(query: string){
-
-
-  console.log("VALOR: ", query)
   this.gifservice.buscarGifs(query);
-
  }
 
 }
