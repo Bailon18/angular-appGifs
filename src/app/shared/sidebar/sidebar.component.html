@@ -7,11 +7,9 @@
 <hr class="text-white">
 <div class="list-group list-reset">
     <a href="#" class="list-group-item list-group-item-action">
-    Dashboard
     </a>
-    <br>
-    <a  *ngFor="let his of historial"  href="#" class="list-group-item list-group-item-action">
-        {{his | titlecase }}
+    <a  *ngFor="let his of historial"  (click)="buscar(his)"  class="list-group-item list-group-item-action">
+        {{his | titlecase }} 
     </a>
 </div>
 </div>

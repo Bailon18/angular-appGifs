@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SearchGifsResponse, Gif } from '../interfaces/gifs.interfaces';
 
@@ -7,6 +7,7 @@ import { SearchGifsResponse, Gif } from '../interfaces/gifs.interfaces';
 })
 export class GifsService{
 
+  private _urlbase : string = 'http://api.giphy.com/v1/gifs'
   private _api : string  = '0p1SmNdD85FCOE7dnrH7YMQHteeo5Q31'
   private _historial: string[] = [''];
 
@@ -22,8 +23,8 @@ export class GifsService{
 
     if(localStorage.getItem('historial')){
       // ! - > es para quita el retorno a nulll
-      this._historial = JSON.parse(localStorage.getItem('historial')!)
-      this.resultados = JSON.parse(localStorage.getItem('resultados')!)
+      this._historial = JSON.parse(localStorage.getItem('historial')!) || [];
+      this.resultados = JSON.parse(localStorage.getItem('resultados')!) || [];
     }
   }
 
@@ -44,14 +45,20 @@ export class GifsService{
       // para guardar en local storage las busqueda que realize y no se borren
       localStorage.setItem('historial', JSON.stringify(this._historial))
 
-      // para los resultados
-      localStorage.setItem('resultados', JSON.stringify(this.resultados));
     }
 
-    this.http.get<SearchGifsResponse>(`http://api.giphy.com/v1/gifs/search?api_key=${this._api}&q=${query}&limit=10L`)
+    const parametros =  new HttpParams()
+                        .set('api_key',this._api)
+                        .set('limit', '10')
+                        .set('q',query)
+
+    this.http.get<SearchGifsResponse>(`${this._urlbase}/search`,{params: parametros})
           .subscribe((respuesta : any) => {
+
             this.resultados = respuesta.data;
-            console.log(respuesta.data);
+            // para los resultados guardar en localStorage
+            localStorage.setItem('resultados', JSON.stringify(this.resultados));
+
           })
 
     
